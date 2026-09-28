@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from src.climate_agent.data_loader import load_nasa_temperature_data
 
 
-rows = load_nasa_temperature_data("data/raw/nasa_global_temperature.csv")
+rows = load_nasa_temperature_data("../../data/raw/nasa_global_temperature.csv")
 
 # Make a DataFrame: a table-like structure that pandas can analyze.
 data = pd.DataFrame(rows)
