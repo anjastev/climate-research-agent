@@ -1,10 +1,54 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
 from src.climate_agent.data_loader import load_nasa_temperature_data
 
 
 rows = load_nasa_temperature_data("data/raw/nasa_global_temperature.csv")
 
-print(f"Number of valid rows: {len(rows)}")
-print("First 3 rows:")
-print(rows[:3])
-print("Last row:")
-print(rows[-1])
+# Make a DataFrame: a table-like structure that pandas can analyze.
+data = pd.DataFrame(rows)
+
+# Group the monthly records by year and calculate each year's mean.
+data["year"] = pd.to_datetime(data["date"]).dt.year
+annual_data = data.groupby("year", as_index=False)["temperature_anomaly"].mean()
+# Keep only years with all 12 monthly records as complete years.
+monthly_counts = data.groupby("year")["temperature_anomaly"].count()
+annual_data["month_count"] = annual_data["year"].map(monthly_counts)
+
+complete_years = annual_data[annual_data["month_count"] == 12]
+partial_years = annual_data[annual_data["month_count"] < 12]
+
+print("Latest annual values:")
+print(annual_data.tail())
+plt.figure(figsize=(12, 6))
+
+# Draw complete years with a solid line.
+plt.plot(
+    complete_years["year"],
+    complete_years["temperature_anomaly"],
+    color="firebrick",
+    label="Complete years",
+)
+
+# Draw incomplete years separately with a dashed line.
+if not partial_years.empty:
+    plt.plot(
+        partial_years["year"],
+        partial_years["temperature_anomaly"],
+        color="darkorange",
+        marker="o",
+        linestyle="--",
+        label="Partial year",
+    )
+
+plt.axhline(0, color="black", linewidth=0.8)
+plt.title("Annual Global Temperature Anomaly")
+plt.xlabel("Year")
+plt.ylabel("Temperature anomaly (°C)")
+plt.grid(True, alpha=0.3)
+plt.legend()
+plt.tight_layout()
+
+plt.savefig("annual_temperature_anomaly.png", dpi=150)
+plt.show()
