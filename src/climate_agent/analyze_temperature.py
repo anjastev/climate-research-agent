@@ -1,10 +1,12 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-
+from pathlib import Path
 from src.climate_agent.data_loader import load_nasa_temperature_data
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DATA_FILE = PROJECT_ROOT / "data" / "raw" / "nasa_global_temperature.csv"
 
-rows = load_nasa_temperature_data("../../data/raw/nasa_global_temperature.csv")
+rows = load_nasa_temperature_data(str(DATA_FILE))
 
 # Make a DataFrame: a table-like structure that pandas can analyze.
 data = pd.DataFrame(rows)
@@ -50,5 +52,8 @@ plt.grid(True, alpha=0.3)
 plt.legend()
 plt.tight_layout()
 
-plt.savefig("annual_temperature_anomaly.png", dpi=150)
+output_dir = PROJECT_ROOT / "outputs"
+output_dir.mkdir(parents=True, exist_ok=True)
+plt.savefig(output_dir / "annual_temperature_anomaly.png", dpi=150)
+
 plt.show()
