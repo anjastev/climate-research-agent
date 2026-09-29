@@ -1,0 +1,17 @@
+[
+  {
+    "query": "human influence climate change greenhouse gas emissions",
+    "expected_terms": ["human-caused", "greenhouse gas", "emissions"],
+    "expected_page": 25
+  },
+  {
+    "query": "sea level rise",
+    "expected_terms": ["sea level", "rise"],
+    "expected_page": 24
+  },
+  {
+    "query": "adaptation limits risks",
+    "expected_terms": ["adaptation", "limits"],
+    "expected_page": 14
+  }
+]
