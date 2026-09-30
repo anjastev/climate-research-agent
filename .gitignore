@@ -9,3 +9,5 @@ data/raw/*
 !data/raw/.gitkeep
 "@ | Set-Content .gitignore
 data/documents/
+# Local semantic-search cache
+.cache/

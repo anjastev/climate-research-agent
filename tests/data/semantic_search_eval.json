@@ -1,0 +1,14 @@
+[
+  {
+    "query": "Why are coastal areas at risk from rising oceans?",
+    "expected_page": 23
+  },
+  {
+    "query": "What actions can reduce global warming?",
+    "expected_page": 32
+  },
+  {
+    "query": "What makes it difficult for communities to adapt to climate change?",
+    "expected_page": 14
+  }
+]
